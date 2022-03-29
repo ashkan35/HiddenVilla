@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using HiddenVilla_Server.Model
+
 
 <PageTitle>Index</PageTitle>
 
@@ -7,3 +9,36 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+<h1>@Room.Name</h1>
+<h6>@Room.Price</h6>
+<br/>
+<input type="checkbox" @bind="Room.IsActive" />&nbsp; IsActive?
+<p>the room is @(Room.IsActive?"Active":"InActive")</p>
+
+<input  @bind="Room.Price" @bind:event="oninput"/> 
+<select @bind="SelectedPropertyValue" >
+    @foreach(var item in Room.Properties)
+    {
+        <option bind="SelectedPrpoertyName" ght="@item.Name"  value="@item.Value">@item.Name</option>
+    }
+</select><span>@SelectedPropertyValue</span><span>@SelectedPrpoertyName</span>
+
+@code
+{
+    string SelectedPropertyValue = "";
+    string SelectedPrpoertyName = "";
+    Model.BlazorRoom Room = new BlazorRoom
+    {
+        Id = 1,
+        IsActive = true,
+        Price = 200,
+        Name = "MyRoom",
+        Properties = new List<BlazorRoomProps>
+        {
+            new BlazorRoomProps{Id = 1,Name = "SquareFeet",Value = "100"},
+            new BlazorRoomProps{Id = 1,Name = "NumberOfBeds",Value = "1Double"}
+        }
+
+    };
+
+}

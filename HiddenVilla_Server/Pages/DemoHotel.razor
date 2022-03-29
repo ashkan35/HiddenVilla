@@ -1,0 +1,66 @@
+﻿@page "/demoHotel"
+@using HiddenVilla_Server.Model
+@using System.Linq
+@using Model
+
+<PageTitle>Demo Hotel</PageTitle>
+<div class="row bg-body">
+    @foreach (var room in Rooms)
+    {
+        var roomId = room.Id;
+        <div class="card m-lg-2" style="width:400px">
+            <div class="card-body">
+                <h4 class="card-title">@room.Name</h4>
+                <p class="card-text">this is awesome room</p>
+                <p>Price:$@room.Price</p>
+                
+                <div>
+                    <input type="checkbox"  @bind="Rooms.SingleOrDefault(x=>x.Id==roomId)!.IsActive" /><span>IsActive?</span>
+                </div>
+                <p class=@(room.IsActive ? "" : "d-none")>
+                    @foreach(var item in room.Properties){<label>@item.Name &nbsp;:</label>@item.Value}
+                </p>
+                <button class="btn btn-primary">See Properties</button>
+                <div class="mt-2">
+                    <AddDeleteComponent></AddDeleteComponent>
+                </div>
+            </div>
+            <img class="card-img-bottom" src="/Images/Myvilla.jpg" alt="Card image" style="width:100%">
+        </div>
+
+    }
+</div>
+@code
+{
+    List<BlazorRoom> Rooms = new();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Rooms.Add(new BlazorRoom
+            {
+                Id = 201,
+                IsActive = true,
+                Price = 200,
+                Name = "2BedRoom",
+                Properties = new List<BlazorRoomProps>
+            {
+                new BlazorRoomProps{Id = 1,Name = "SquareFeet",Value = "100"},
+                new BlazorRoomProps{Id = 1,Name = "NumberOfBeds",Value = "2Double"}
+            }
+
+            });
+        Rooms.Add(new BlazorRoom
+            {
+                Id = 301,
+                IsActive = false,
+                Price = 300,
+                Name = "3BedRoom",
+                Properties = new List<BlazorRoomProps>
+            {
+                new BlazorRoomProps{Id = 1,Name = "SquareFeet",Value = "150"},
+                new BlazorRoomProps{Id = 1,Name = "NumberOfBeds",Value = "3Double"}
+            }
+
+            });
+    }
+}
