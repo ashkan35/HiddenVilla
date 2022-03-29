@@ -1,0 +1,25 @@
+﻿@using HiddenVilla_Server.Model
+<div class="card m-lg-2" style="width:400px">
+    <div class="card-body">
+        <h4 class="card-title">@Room.Name</h4>
+        <p class="card-text">this is awesome room</p>
+        <p>Price:$@Room.Price</p>
+                
+        <div>
+            <input type="checkbox"  @bind="Room.IsActive" /><span>IsActive?</span>
+        </div>
+        <p class=@(Room.IsActive ? "" : "d-none")>
+            @foreach(var item in Room.Properties){<label>@item.Name &nbsp;:</label>@item.Value}
+        </p>
+        <button class="btn btn-primary">See Properties</button>
+        <div class="mt-2">
+            <AddDeleteComponent IsAdmin="true"></AddDeleteComponent>
+        </div>
+    </div>
+    <img class="card-img-bottom" src="/Images/Myvilla.jpg" alt="Card image" style="width:100%">
+</div>
+
+@code {
+    [Parameter]
+    public BlazorRoom Room { get; set; }
+}
