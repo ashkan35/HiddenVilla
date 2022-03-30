@@ -1,8 +1,14 @@
 ﻿@using HiddenVilla_Server.Model
-<span class="badge bg-primary"><label>@Amenitiy.Name:&nbsp;</label>@Amenitiy.Value</span>
+<span @onclick="args=>SelectedAmenityClick(args,Amenitiy.Name)" class="badge bg-primary"><label>@Amenitiy.Name:&nbsp;</label>@Amenitiy.Value</span>
 
 @code {
     [Parameter]
     public Amenitiy Amenitiy { get; set; }
+    [Parameter]
+    public EventCallback<string> SelectedAmenityClickCallBack { get; set; }
+    public async Task SelectedAmenityClick(MouseEventArgs e,string name)
+    {
+        await SelectedAmenityClickCallBack.InvokeAsync(name);
+    }
 
 }
