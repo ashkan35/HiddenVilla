@@ -1,5 +1,5 @@
 ﻿@page "/lifecycle"
-
+@inject IJSRuntime JsRuntime
 <PageTitle>Counter</PageTitle>
 
 <h1>Life Cycle</h1>
@@ -38,6 +38,11 @@
     protected override async Task OnParametersSetAsync()
     {
         Message.Add("Hi! I Am OnParameterSetAsync");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+         JsRuntime.InvokeVoidAsync("alert", "AfterRender!");
     }
 
 }
