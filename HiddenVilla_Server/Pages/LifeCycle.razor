@@ -7,11 +7,12 @@
 <div>
     <LifeCycleComponent TestParam="Param"></LifeCycleComponent>
 </div>
-<button class="btn bg-dark" @onclick="ChangeParameter">Change Param</button>
+<button class="btn btn-success" @onclick="ChangeParameter">Change Param</button>
+<button class="btn btn-success" @onclick="ChangeState">Change State</button><span>@StateTest</span>
 <div></div>
 @code {
     public int Param = 10;
-
+    public int StateTest { get; set; } = 1000;
     protected void ChangeParameter()
     {
         Param *= 5;
@@ -20,6 +21,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        //InvokeAsync(StateHasChanged);
         Message.Add("Hi I am OnInitialized");
     }
 
@@ -42,7 +44,31 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-         JsRuntime.InvokeVoidAsync("alert", "AfterRender!");
+         //JsRuntime.InvokeVoidAsync("alert", "AfterRender!");
+        Message.Add("On After Render Has Called!");
+    }
+
+    protected override bool ShouldRender()
+    {
+        Message.Add("Should Render Called");
+        return base.ShouldRender();
+    }
+
+     void ChangeState()
+    {
+        var timer = new System.Threading.Timer(TimeCallBack,null, 1000, 1000);
+         //for(int i=0;i<1000;i++)
+         //    TimeCallBack(null);
+
+    }
+
+     void TimeCallBack(object state)
+    {
+        if (StateTest > 0)
+        {
+            StateTest--;
+            InvokeAsync(StateHasChanged);
+        }
     }
 
 }
