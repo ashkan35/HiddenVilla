@@ -2,7 +2,9 @@
 <div class="card m-lg-2" style="width:400px">
     <div class="card-body">
         <h4 class="card-title">@Room.Name</h4>
+
         <p class="card-text">this is awesome room</p>
+        <input type="checkbox" class="form-check-input" @onchange="RoomCheckBoxChanged"/><label>Select Room</label>
         <p>Price:$@Room.Price</p>
                 
         <div>
@@ -22,4 +24,11 @@
 @code {
     [Parameter]
     public BlazorRoom Room { get; set; }
+    [Parameter]
+    public EventCallback<bool> OnRoomCheckBoxSelection { get; set; }
+
+    async Task RoomCheckBoxChanged(ChangeEventArgs e)
+    {
+        await OnRoomCheckBoxSelection.InvokeAsync((bool) e.Value);
+    }
 }

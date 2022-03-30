@@ -4,10 +4,11 @@
 @using Model
 
 <PageTitle>Demo Hotel</PageTitle>
-<div class="row bg-body">
+<div class="row bg-body p-1">
+    <h6 class="bg-white text-info mt-2"><label>Number od selected rooms :&nbsp;</label><span class="text-danger">@SelectedRooms</span></h6>
     @foreach (var room in Rooms)
     {
-        <RoomComponent Room="room"></RoomComponent>
+        <RoomComponent OnRoomCheckBoxSelection="RoomSelectionCounterChange" Room="room"></RoomComponent>
 
     }
     <h3 class="text-info">Hotel Amenities</h3>
@@ -17,13 +18,22 @@
             <div class="d-inline-block"><AmenitiesComponent Amenitiy="amenity"></AmenitiesComponent></div>
         }
     </div>
-    
+
 </div>
 
 @code
 {
+    public int SelectedRooms { get; set; } = 0;
     List<Amenitiy> amenities = new();
     List<BlazorRoom> Rooms = new();
+
+    public void RoomSelectionCounterChange(bool status)
+    {
+        if (status)
+            SelectedRooms++;
+        else
+        SelectedRooms--;
+    }
     protected override void OnInitialized()
     {
         base.OnInitialized();
