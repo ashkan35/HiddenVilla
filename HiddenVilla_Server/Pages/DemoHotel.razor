@@ -10,13 +10,26 @@
         <RoomComponent Room="room"></RoomComponent>
 
     }
+    <h3 class="text-info">Hotel Amenities</h3>
+    <div class="flex-row justify-content-center">
+        @foreach (var amenity in amenities)
+        {
+            <div class="d-inline-block"><AmenitiesComponent Amenitiy="amenity"></AmenitiesComponent></div>
+        }
+    </div>
+    
 </div>
+
 @code
 {
+    List<Amenitiy> amenities = new();
     List<BlazorRoom> Rooms = new();
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        amenities.Add(new Amenitiy{Id = 101,Name = "Gym",Value = "24*7"});
+        amenities.Add(new Amenitiy{Id = 102,Name = "BreakFast",Value = "6-10AM"});
+        amenities.Add(new Amenitiy{Id = 102,Name = "Wifi",Value = "FREE"});
         Rooms.Add(new BlazorRoom
             {
                 Id = 201,

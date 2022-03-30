@@ -1,6 +1,6 @@
 ﻿namespace HiddenVilla_Server.Model
 {
-    public class Amenities
+    public class Amenitiy
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,0 +1,27 @@
+﻿@page "/lifecycle"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Life Cycle</h1>
+<h3>@string.Join("-",Message)</h3>
+<div>
+    <LifeCycleComponent></LifeCycleComponent>
+</div>
+<div></div>
+@code {
+    public List<string> Message = new List<string>();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Message.Add("Hi I am OnInitialized");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await  Task.Delay(1000);
+        Message.Add("Hi! I Am OnInitializedAsync");
+
+       
+    }
+
+}

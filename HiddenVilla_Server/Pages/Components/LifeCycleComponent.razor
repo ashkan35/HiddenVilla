@@ -1,0 +1,20 @@
+﻿<h1>Life Cycle Component</h1>
+<h3>@string.Join("-",Message)</h3>
+
+<div></div>
+@code {
+    public List<string> Message = new List<string>();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Message.Add("Hi I am child OnInitialized");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Message.Add("Hi! I Am child OnInitializedAsync");
+
+       
+    }
+
+}
