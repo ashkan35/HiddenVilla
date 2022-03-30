@@ -5,10 +5,17 @@
 <h1>Life Cycle</h1>
 <h3>@string.Join("-",Message)</h3>
 <div>
-    <LifeCycleComponent></LifeCycleComponent>
+    <LifeCycleComponent TestParam="Param"></LifeCycleComponent>
 </div>
+<button class="btn bg-dark" @onclick="ChangeParameter">Change Param</button>
 <div></div>
 @code {
+    public int Param = 10;
+
+    protected void ChangeParameter()
+    {
+        Param *= 5;
+    }
     public List<string> Message = new List<string>();
     protected override void OnInitialized()
     {
@@ -18,10 +25,19 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await  Task.Delay(1000);
+        await Task.Delay(1000);
         Message.Add("Hi! I Am OnInitializedAsync");
+    }
 
-       
+    protected override void OnParametersSet()
+    {
+        Message.Add("Hi I am OnParameterSet");
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Message.Add("Hi! I Am OnParameterSetAsync");
     }
 
 }

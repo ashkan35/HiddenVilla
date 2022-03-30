@@ -3,6 +3,8 @@
 
 <div></div>
 @code {
+    [Parameter]
+    public int TestParam { get; set; }
     public List<string> Message = new List<string>();
     protected override void OnInitialized()
     {
@@ -10,11 +12,10 @@
         Message.Add("Hi I am child OnInitialized");
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnParametersSet()
     {
-        Message.Add("Hi! I Am child OnInitializedAsync");
-
-       
+        Message.Add("Hi I am child OnParameterSet");
     }
+
 
 }
