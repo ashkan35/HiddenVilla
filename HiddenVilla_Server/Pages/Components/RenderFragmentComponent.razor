@@ -9,7 +9,18 @@
     {
         <span>Nothing from parent</span>  
     }
+   
 
+</div>
+<div class="alert alert-danger">
+    @if (ChildContent2 != null)
+    {
+        <span>@ChildContent2</span>
+    }
+    else
+    {
+        <span>There is ni childC ontent2 item</span>
+    }
 </div>
 <button  @onclick="EventCallback" type="button">Event Call Back Button</button>
 
@@ -19,6 +30,8 @@
     public string Message { get; set; }
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+        [Parameter]
+    public RenderFragment ChildContent2 { get; set; }
     [Parameter]
     public EventCallback<MouseEventArgs> EventCallback { get; set; }
 }

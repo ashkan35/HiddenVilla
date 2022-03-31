@@ -4,7 +4,7 @@
 
 </RenderFragmentComponent>
 <RenderFragmentComponent EventCallback="SetCallBackMessage" Message="This is a message from Parent">
-    <table class="table table-hover">
+    <ChildContent><table class="table table-hover">
         <thead>
             <tr>
                 <th>Firstname</th>
@@ -29,7 +29,10 @@
                 <td>july@example.com</td>
             </tr>
         </tbody>
-    </table>
+    </table></ChildContent>
+    <ChildContent2>
+        Child content2 from parent
+    </ChildContent2>
 </RenderFragmentComponent>
 
 <div><span>@CallBackMessage</span></div>
