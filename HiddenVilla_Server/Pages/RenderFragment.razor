@@ -1,9 +1,9 @@
 ﻿@page "/RenderFragment"
 
-<RenderFragmentComponent Message="This is a message from Parent">
+<RenderFragmentComponent EventCallback="SetCallBackMessage" Message="This is a message from Parent">
 
 </RenderFragmentComponent>
-<RenderFragmentComponent Message="This is a message from Parent">
+<RenderFragmentComponent EventCallback="SetCallBackMessage" Message="This is a message from Parent">
     <table class="table table-hover">
         <thead>
             <tr>
@@ -32,7 +32,13 @@
     </table>
 </RenderFragmentComponent>
 
-
+<div><span>@CallBackMessage</span></div>
 @code
 {
+    public string CallBackMessage { get; set; }
+    public void SetCallBackMessage()
+    {
+        CallBackMessage += "Message Set";
+    }
+
 }
