@@ -1,0 +1,14 @@
+﻿<h3>Attribute Splatting</h3>
+<input type="text" @attributes=ComponentAttributes />
+
+@code {
+    [Parameter]
+    public Dictionary<string, object> ComponentAttributes { set; get; } = new Dictionary<string, object>
+    {
+        {"placeholder","place holder from component"},
+        {"required","required from component"},
+        {"maxlength",5}
+    };
+    
+
+}
