@@ -1,7 +1,6 @@
 ﻿@page "/learnrouting"
 @page "/newlearnrouting"
 @page "/learnrouting/{firstName}/{lastName}"
-
 <PageTitle>Learn Routing</PageTitle>
 <div class="alert alert-link">
     <label>FirstName:</label>@FirstName
@@ -9,7 +8,7 @@
     <label>LastName:</label>@LastName
 </div>
 
-
+<a class="btn btn-primary" href="/advancedrouting?firstname=ashkan&lastName=semsar">Advanced Routing</a>
 @code {
 [Parameter]
 public string FirstName { get; set; }
