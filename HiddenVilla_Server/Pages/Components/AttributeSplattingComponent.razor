@@ -1,6 +1,6 @@
 ﻿<h3>Attribute Splatting</h3>
 <input type="text" @attributes=ComponentAttributes />
-
+<GrandChildComponent></GrandChildComponent>
 @code {
     [Parameter]
     public Dictionary<string, object> ComponentAttributes { set; get; } = new Dictionary<string, object>

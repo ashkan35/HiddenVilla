@@ -34,11 +34,16 @@
         Child content2 from parent
     </ChildContent2>
 </RenderFragmentComponent>
-<AttributeSplattingComponent ComponentAttributes=ParentAttributes></AttributeSplattingComponent>
+<CascadingValue Value=MessageToGrandChild>
+    <AttributeSplattingComponent ComponentAttributes=ParentAttributes></AttributeSplattingComponent>
+
+</CascadingValue>
 <div><span>@CallBackMessage</span></div>
 @code
 {
-        public Dictionary<string, object> ParentAttributes = new Dictionary<string, object>
+    [Parameter]
+    public string MessageToGrandChild { get; set; } = "Massege from grand parent";
+    public Dictionary<string, object> ParentAttributes = new Dictionary<string, object>
     {
         {"placeholder","place holder from parent"},
         {"required","required"},
