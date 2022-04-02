@@ -4,45 +4,51 @@
 
 </RenderFragmentComponent>
 <RenderFragmentComponent EventCallback="SetCallBackMessage" Message="This is a message from Parent">
-    <ChildContent><table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@example.com</td>
-            </tr>
-            <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@example.com</td>
-            </tr>
-        </tbody>
-    </table></ChildContent>
+    <ChildContent>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>john@example.com</td>
+                </tr>
+                <tr>
+                    <td>Mary</td>
+                    <td>Moe</td>
+                    <td>mary@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </ChildContent>
     <ChildContent2>
         Child content2 from parent
     </ChildContent2>
 </RenderFragmentComponent>
-<CascadingValue Value=MessageToGrandChild>
-    <AttributeSplattingComponent ComponentAttributes=ParentAttributes></AttributeSplattingComponent>
+<CascadingValue Value=MessageToGrandChild Name="MessageFromGrandParent">
+    <CascadingValue Value=messyMessage Name="AnotherMessageFromGrandParent">
 
+        <AttributeSplattingComponent ComponentAttributes=ParentAttributes></AttributeSplattingComponent>
+
+    </CascadingValue>
 </CascadingValue>
 <div><span>@CallBackMessage</span></div>
 @code
 {
     [Parameter]
     public string MessageToGrandChild { get; set; } = "Massege from grand parent";
+    private string messyMessage = "Wooooo";
     public Dictionary<string, object> ParentAttributes = new Dictionary<string, object>
     {
         {"placeholder","place holder from parent"},

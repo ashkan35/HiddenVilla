@@ -1,8 +1,11 @@
 ﻿
 <div class="alert alert-warning">
     <h3>@MessageFromGrandParent</h3>
+    <h3>@AnotherCascading</h3>
 </div>
 @code {
-    [CascadingParameter]
+    [CascadingParameter(Name ="MessageFromGrandParent")]
     public string MessageFromGrandParent { get; set; }
+    [CascadingParameter(Name ="AnotherMessageFromGrandParent")]
+    public string AnotherCascading { get; set; }
 }
