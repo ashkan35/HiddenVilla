@@ -1,0 +1,22 @@
+﻿@page "/advancedrouting"
+@inject NavigationManager manager
+<PageTitle>Advanced Routing</PageTitle>
+<div class="alert alert-link">
+    <label>FirstName:</label>@FirstName
+    <br />
+    <label>LastName:</label>@LastName
+</div>
+<button @onclick="Redirect" class="btn btn-success">Back</button>
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name ="firstname")]
+    public string FirstName { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery(Name ="LastName")]
+    public string LastName { get; set; }
+    public void Redirect(){
+        manager.NavigateTo("/learnrouting");
+    }
+
+
+}

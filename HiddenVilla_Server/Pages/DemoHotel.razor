@@ -15,18 +15,26 @@
     <div class="flex-row justify-content-center">
         @foreach (var amenity in amenities)
         {
-            <div class="d-inline-block"><AmenitiesComponent Amenitiy="amenity"></AmenitiesComponent></div>
+            <div class="d-inline-block"><AmenitiesComponent SelectedAmenityClickCallBack="SelectedAmenityChange" Amenitiy="amenity">
+                <ChildContent>#1</ChildContent>
+                <ChildContent2>#2</ChildContent2>
+            </AmenitiesComponent></div>
         }
     </div>
+        <h6 class="bg-white text-info mt-2"><label>SelectedAmenity :&nbsp;</label><span class="text-danger">@SelectedAmenity</span></h6>
 
 </div>
 
 @code
 {
+    public string SelectedAmenity { get; set; } = "jhj";
     public int SelectedRooms { get; set; } = 0;
     List<Amenitiy> amenities = new();
     List<BlazorRoom> Rooms = new();
-
+    public void SelectedAmenityChange(string name)
+    {
+        SelectedAmenity = name;
+    }
     public void RoomSelectionCounterChange(bool status)
     {
         if (status)
