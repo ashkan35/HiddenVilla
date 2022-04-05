@@ -1,0 +1,60 @@
+﻿@page "/hotel-room/create"
+@using HiddenVilla_Server.Data
+@using Microsoft.EntityFrameworkCore
+@inject HiddenVillaDbContext context
+@inject NavigationManager navigationManager
+<div class="row mt-5 mb-2">
+    <h3 class="card-title text-info">@Title Hotel Room</h3>
+    <div class="card col-md-12">
+        <div class="card-body">
+            <EditForm Model="Room" OnValidSubmit="HandleHotelRoomUpsert">
+                <DataAnnotationsValidator>       </DataAnnotationsValidator>
+                <ValidationSummary>
+
+                </ValidationSummary>
+                <div class="mb-3">
+                    <label class="form-label"> Name</label>
+                    <InputText @bind-Value="Room.Name" class="form-control"></InputText>
+                    <ValidationMessage For="() => Room.Name"></ValidationMessage>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"> Occupancy</label>
+                    <InputNumber @bind-Value="Room.Occupancy" class="form-control"></InputNumber>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"> Regular rate</label>
+                    <InputNumber @bind-Value="Room.RegularRate" class="form-control"></InputNumber>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"> Square feet</label>
+                    <InputText @bind-Value="Room.SqFt" class="form-control"></InputText>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"> Details</label>
+                    <InputTextArea @bind-Value="Room.Details" class="form-control"></InputTextArea>
+                </div>
+
+                <button class="btn btn-primary">@Title Room</button>
+            </EditForm>
+            <NavLink href="hotel-room" class="btn btn-secondary mt-5 float-end">Back to list</NavLink>
+        </div>
+    </div>
+</div>
+@code {
+    private HotelRoom Room { set; get; } = new HotelRoom();
+    private string Title { get; set; } = "Create";
+
+    private async Task HandleHotelRoomUpsert()
+    {
+        Room.CreatedDate = DateTime.Now;
+        Room.UpdatedDate = DateTime.Now;
+        Room.CreatedBy = "ashkan";
+        Room.UpdatedBy = "Ashkan";
+        await context.HotelRooms.AddAsync(Room);
+
+        await context.SaveChangesAsync();
+
+
+        navigationManager.NavigateTo("/hotel-rooms");
+    }
+}

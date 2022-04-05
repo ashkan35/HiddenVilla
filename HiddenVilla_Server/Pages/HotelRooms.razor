@@ -1,0 +1,58 @@
+﻿@page "/hotel-rooms"
+@using HiddenVilla_Server.Data
+@using Microsoft.EntityFrameworkCore
+@inject HiddenVillaDbContext context
+<div class="row">
+    <div class="col-8"><h4 class=" card-title text-black">Hotel Rooms</h4></div>
+    <div class="col-4">
+        <NavLink href="/hotel-room/create" class="btn btn-info btn-lg">Add Room</NavLink>
+    </div>
+    <div class="row card">
+
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Room price</th>
+                    <th>Occupancy</th>
+                    <th>Sq ft</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (Rooms.Any())
+                {
+                    @foreach (var item in Rooms)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.RegularRate</td>
+                            <td>@item.Occupancy</td>
+                            <td>@item.SqFt</td>
+                            <td>@item.Details</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="text-danger">
+                        <td>No records found!</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@code {
+    public List<HotelRoom> Rooms { get; set; } = new List<HotelRoom>();
+    protected override async Task OnInitializedAsync()
+    {
+        Rooms = await context.HotelRooms.ToListAsync();
+     
+    }
+
+}
