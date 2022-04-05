@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/jquery/",
+      "files": [
+        "jquery.js"
+      ]
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/toastr.js/",
+      "files": [
+        "toastr.min.js"
+      ]
+    }
+  ]
+}

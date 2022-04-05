@@ -1,6 +1,6 @@
 ﻿window.ShowToaster = (type, message) => {
     if (type === "success") {
-        toastr.success("This is Success", "Operation Result");
+        window.toastr.success("This is Success", "Operation Result");
         
     }
     if (type === "error") {

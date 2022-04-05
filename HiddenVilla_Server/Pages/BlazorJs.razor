@@ -16,11 +16,11 @@
     private bool confirmResult = false;
     private async Task TestJavaScript()
     {
-        confirmResult =await jsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        confirmResult = await jsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
     }
 
-    private async Task  ShowSuccessToaster()
+    private async Task ShowSuccessToaster()
     {
-        await jsRuntime.InvokeVoidAsync("ShowToaster", "asas", "sdfsdf");
+        await jsRuntime.InvokeVoidAsync("ShowToaster", "success", "MyMessage");
     }
 }
