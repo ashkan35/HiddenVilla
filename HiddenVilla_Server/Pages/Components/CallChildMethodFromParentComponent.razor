@@ -1,0 +1,19 @@
+﻿@using HiddenVilla_Server.Helpers
+@inject IJSRuntime jsRuntime
+<h3>CallChildMethodFromParentComponent</h3>
+<p>@Count</p>
+@code {
+
+    [Parameter]
+    public int Count { get; set; } = 10;
+
+    public async Task ShowSuccess()
+    {
+        await  jsRuntime.ShowSuccessSweetAlert("success");
+    }
+    public void Increase()
+    {
+        Count++;
+        InvokeAsync(StateHasChanged);
+    }
+}

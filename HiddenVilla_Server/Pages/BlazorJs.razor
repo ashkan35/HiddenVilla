@@ -1,8 +1,14 @@
 ﻿@page "/blazorjs"
+@using HiddenVilla_Server.Helpers
 @inject IJSRuntime jsRuntime
 <h3>BlazorJs</h3>
 <button @onclick="TestJavaScript" class="btn btn-primary">Test Confirm</button>
-<button @onclick="ShowSuccessToaster" class="btn btn-success">Test Confirm</button>
+<button @onclick="ShowSuccessToaster" class="btn btn-success">Test Success Toaster</button>
+<button @onclick="ShowWarningToaster" class="btn btn-warning">Test Success Toaster</button>
+<button @onclick="(()=>ShowErrorToaster(ErrorMessage))" class="btn btn-danger">Test Success Toaster</button>
+<button @onclick="ShowInfoToaster" class="btn btn-info">Test Success Toaster</button>
+<button @onclick="ShowSuccessSweetAlert" class="btn btn-warning">Test Success Toaster</button>
+
 <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
         <div class="toast-body">
@@ -13,6 +19,7 @@
 </div>
 <p>@(confirmResult?"Confirmed":"Not Confirmed")</p>
 @code {
+    private string ErrorMessage = "This is an Error";
     private bool confirmResult = false;
     private async Task TestJavaScript()
     {
@@ -21,6 +28,32 @@
 
     private async Task ShowSuccessToaster()
     {
-        await jsRuntime.InvokeVoidAsync("ShowToaster", "success", "MyMessage");
+        //await jsRuntime.InvokeVoidAsync("ShowToaster", "success", "MyMessage");
+        await jsRuntime.ShowSuccessToaster("That was success?");
+
+    }
+    private async Task ShowWarningToaster()
+    {
+        //await jsRuntime.InvokeVoidAsync("ShowToaster", "success", "MyMessage");
+        await jsRuntime.ShowWarningToaster("This is warning?");
+
+    }
+    private async Task ShowInfoToaster()
+    {
+        //await jsRuntime.InvokeVoidAsync("ShowToaster", "success", "MyMessage");
+        await jsRuntime.ShowInfoToaster("This is info");
+
+    }
+    private async Task ShowErrorToaster(string message)
+    {
+        //await jsRuntime.InvokeVoidAsync("ShowToaster", "success", "MyMessage");
+        await jsRuntime.ShowErrorToaster(message);
+
+    }
+    private async Task ShowSuccessSweetAlert( )
+    {
+    //await jsRuntime.InvokeVoidAsync("ShowToaster", "success", "MyMessage");
+        await jsRuntime.ShowSuccessSweetAlert("You Clicked the button");
+
     }
 }

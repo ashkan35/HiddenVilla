@@ -1,0 +1,13 @@
+﻿@page "/callchildmethod"
+<h3>CallChildMethodFromParent</h3>
+<CallChildMethodFromParentComponent @ref="childComp">
+
+</CallChildMethodFromParentComponent>
+
+<button class="btn btn-secondary" @onclick="() => childComp.Increase()">Increase</button>
+
+<button class="btn btn-success" @onclick="() => childComp.ShowSuccess()">Show success</button>
+
+@code {
+    private CallChildMethodFromParentComponent childComp;
+}

@@ -15,6 +15,14 @@
       "files": [
         "toastr.min.js"
       ]
+    },
+    {
+      "library": "limonte-sweetalert2@11.4.8",
+      "destination": "wwwroot/limonte-sweetalert2/",
+      "files": [
+        "sweetalert2.min.js",
+        "sweetalert2.all.min.js"
+      ]
     }
   ]
 }
