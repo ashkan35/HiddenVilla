@@ -1,4 +1,5 @@
 using HiddenVilla_Server.Data;
+using HiddenVilla_Server.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddDbContext<HiddenVillaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HiddenVillaDbContext")));
+builder.Services.AddScoped<IFileService, FileService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

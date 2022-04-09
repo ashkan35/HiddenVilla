@@ -17,6 +17,7 @@
                     <th>Occupancy</th>
                     <th>Sq ft</th>
                     <th>Description</th>
+                    <th>Operations</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,8 @@
                             <td>@item.Occupancy</td>
                             <td>@item.SqFt</td>
                             <td>@item.Details</td>
+                            <td><NavLink href=@($"/hotel-room/update/{item.Id}") class="btn btn-warning">Edit</NavLink></td>
+
                         </tr>
                     }
                 }

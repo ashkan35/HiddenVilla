@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HiddenVilla_Server.Data
 {
@@ -25,6 +26,8 @@ namespace HiddenVilla_Server.Data
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string UpdatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public ICollection<HotelRoomImage> HotelRoomImages { get; set; }
+        [NotMapped] public List<string> UploadedImages { get; set; } = new();
 
     }
 }

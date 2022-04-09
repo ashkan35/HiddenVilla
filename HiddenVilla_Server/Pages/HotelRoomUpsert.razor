@@ -1,8 +1,14 @@
 ﻿@page "/hotel-room/create"
+@page "/hotel-room/update/{Id:int}"
 @using HiddenVilla_Server.Data
+@using HiddenVilla_Server.Helpers
+@using HiddenVilla_Server.Services
 @using Microsoft.EntityFrameworkCore
+@using System.Security.Cryptography.X509Certificates
 @inject HiddenVillaDbContext context
 @inject NavigationManager navigationManager
+@inject IFileService fileService
+@inject IJSRuntime jsRuntime
 <div class="row mt-5 mb-2">
     <h3 class="card-title text-info">@Title Hotel Room</h3>
     <div class="card col-md-12">
@@ -33,27 +39,111 @@
                     <label class="form-label"> Details</label>
                     <InputTextArea @bind-Value="Room.Details" class="form-control"></InputTextArea>
                 </div>
-
+                <InputFile OnChange="@FileUpload" @attributes="Attributes" multiple>Choose Images</InputFile>
                 <button class="btn btn-primary">@Title Room</button>
             </EditForm>
+            <div class="row">
+
+                @if (Room.HotelRoomImages is { Count: > 0 })
+                {
+                    int serial = 1;
+                    foreach (var roomImage in Room.HotelRoomImages)
+                    {
+                        <div class="col-md-2 mt-3">
+                            <div class="room-image" style="background: url('@roomImage.ImageUrl') 50% 50%; ">
+                                <span class="room-image-title">@serial</span>
+                            </div>
+
+                            <button type="button" @onclick="()=>DeletePhoto(roomImage)" class="btn btn-outline-danger w-100  mt-4">
+                                Delete
+                            </button>
+                        </div>
+                        serial++;
+                    }
+                }
+            </div>
             <NavLink href="hotel-room" class="btn btn-secondary mt-5 float-end">Back to list</NavLink>
         </div>
     </div>
 </div>
 @code {
+
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
     private HotelRoom Room { set; get; } = new HotelRoom();
     private string Title { get; set; } = "Create";
+    protected override async Task OnInitializedAsync()
+    {
+        Attributes.Add("accept", ".bmp,.jpg,.jpeg");
+        if (Id == null)
+        {
+            Title = "Create";
+        }
+        else
+        {
+            Title = "Update";
+            Room = await context.HotelRooms.Include(x => x.HotelRoomImages).SingleOrDefaultAsync(x => x.Id == Id);
+        }
+    }
 
+    private async Task FileUpload(InputFileChangeEventArgs e)
+    {
+        var images = new List<string>();
+        if (e.GetMultipleFiles().Count > 0)
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                var path = await fileService.UploadFile(file);
+                Room.UploadedImages.Add(path);
+            }
+            if (Room.UploadedImages.Any())
+            {
+                if (Room.HotelRoomImages == null || !Room.HotelRoomImages.Any())
+                    Room.HotelRoomImages = new List<HotelRoomImage>();
+                foreach (var item in Room.UploadedImages)
+                {
+                    if (Room.HotelRoomImages.All(x => x.ImageUrl != item))
+                        Room.HotelRoomImages.Add(new HotelRoomImage { ImageUrl = item });
+                }
+
+            }
+        }
+        else
+        {
+            await jsRuntime.ShowErrorToaster("Wrong Files");
+        }
+
+
+    }
+
+    private  Task<bool> DeletePhoto(HotelRoomImage image)
+    {
+        Room.HotelRoomImages.Remove(image);
+        Room.UploadedImages.Remove(image.ImageUrl);
+        return Task.FromResult(true);
+    }
     private async Task HandleHotelRoomUpsert()
     {
-        Room.CreatedDate = DateTime.Now;
-        Room.UpdatedDate = DateTime.Now;
-        Room.CreatedBy = "ashkan";
-        Room.UpdatedBy = "Ashkan";
-        await context.HotelRooms.AddAsync(Room);
+        if (Id != null && Title == "Update")
+        {
+            context.HotelRooms.Update(Room);
+        }
+        else
+        {
+            Room.CreatedDate = DateTime.Now;
+            Room.UpdatedDate = DateTime.Now;
+            Room.CreatedBy = "ashkan";
+            Room.UpdatedBy = "Ashkan";
+            await context.HotelRooms.AddAsync(Room);
+        }
+
 
         await context.SaveChangesAsync();
-
+        
 
         navigationManager.NavigateTo("/hotel-rooms");
     }
