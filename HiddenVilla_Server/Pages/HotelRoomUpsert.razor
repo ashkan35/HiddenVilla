@@ -120,11 +120,22 @@
 
     }
 
-    private  Task<bool> DeletePhoto(HotelRoomImage image)
+    private async  Task<bool> DeletePhoto(HotelRoomImage image)
     {
+        if (image.Id != 0 )
+        {
+            var existingDbImage =await context.HotelRoomImages.SingleOrDefaultAsync(x => x.ImageUrl == image.ImageUrl);
+            if (existingDbImage != null)
+            {
+                context.HotelRoomImages.Remove(existingDbImage);
+                context.SaveChangesAsync();
+            }
+
+        }
         Room.HotelRoomImages.Remove(image);
         Room.UploadedImages.Remove(image.ImageUrl);
-        return Task.FromResult(true);
+        fileService.DeleteFile(image.ImageUrl);
+        return true;
     }
     private async Task HandleHotelRoomUpsert()
     {
@@ -143,7 +154,7 @@
 
 
         await context.SaveChangesAsync();
-        
+
 
         navigationManager.NavigateTo("/hotel-rooms");
     }

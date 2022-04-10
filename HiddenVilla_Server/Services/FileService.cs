@@ -17,7 +17,7 @@ namespace HiddenVilla_Server.Services
         {
             try
             {
-                var path = $"{_webHostEnvironment.WebRootPath}\\RoomImages\\{fileName}";
+                var path = _webHostEnvironment.WebRootPath+ fileName;
                 if (File.Exists(path))
                 {
                     File.Delete(path);
